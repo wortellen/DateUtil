@@ -1,21 +1,15 @@
 package ru.ncedu.wortellen.trickytasks2.DateUtil;
-import java.time.Period;
+
 import java.time.temporal.ChronoUnit;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.temporal.TemporalUnit;
 
-import static java.util.concurrent.TimeUnit.DAYS;
 
 public class DateUtil {
-    boolean isLeapYear(int year) {//Определяет високосный год или нет.
-        if ((year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0))) {
-            return true;
-        } else {
-            return false;
-        }
+    boolean isLeapYear(int year) {
+        return (year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0));
     }
-    boolean isValidDate(int year, int month, int day) {//Осуществляет проверку даты на корректность.
+    boolean isValidDate(int year, int month, int day) {
         try {
             LocalDate d = LocalDate.of(year,month,day);
             return true;
@@ -27,29 +21,14 @@ public class DateUtil {
 
     }
 
-    int getDayOfWeek(int year, int month, int day){//Возвращает номер дня недели, где 0 – MON, 6- SUN (Можно сделать enum – ом )
+    int getDayOfWeek(int year, int month, int day){
         LocalDate d = LocalDate.of(year,month,day);
         DayOfWeek dayOfWeek = d.getDayOfWeek();
         int value = dayOfWeek.getValue();
-        switch (value) {
-            case 1:
-                return 0;
-            case 2:
-                return 1;
-            case 3:
-                return 2;
-            case 4:
-                return 3;
-            case 5:
-                return 4;
-            case 6:
-                return 5;
-            case 7:
-                return 6;
-        }
-        return -1;
+        return value-1;
+
     }
-    String toString(int year, int month, int day){//Форматирует дату в красивом виде. Например Tuesday 14 Feb 2012
+    String toString(int year, int month, int day){
         LocalDate d = LocalDate.of(year,month,day);
         DayOfWeek dayOfWeek = d.getDayOfWeek();
         int value = dayOfWeek.getValue();
@@ -119,7 +98,7 @@ public class DateUtil {
         }
         return dayofweek+" "+day+" "+monthS+" "+year;
     }
-    int countDays(int year, int month, int day){//Вычисляет сколько дней прошло с данной даты по сегодняшнюю
+    int countDays(int year, int month, int day){
         LocalDate now = LocalDate.now();
         LocalDate d = LocalDate.of(year,month,day);
         return (int)ChronoUnit.DAYS.between(d,now);
